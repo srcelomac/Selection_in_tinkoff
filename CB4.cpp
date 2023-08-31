@@ -40,19 +40,24 @@ int main() {
 
     if (q < p) { cout << 0; return 0; }
     else if (q == p) {cout << (q ^ (q - 1)); return 0;}
-    //vector <ll> v(q+1);
-    //v[0] = 0;
+    /*
     vector <ll> vp(q + 1);
     vp[0] = 0;
     vp[1] = 1;
+    */
 
-    ll tm;
-    for (ll i = 1; i <= q; i++) {
+    //ll tm;
+    ll sum = 0;
+    for (ll i = p; i <= q; i++) {
+        sum += (i ^ (i - 1));
+        /*
         tm = (i ^ (i - 1));
         vp[i] = vp[i - 1] + tm;
+        */
     }
 
-    cout << (vp[q] - vp[p-1]);
+    //cout << (vp[q] - vp[p-1]);
+    cout << sum;
 
 
     return 0;
