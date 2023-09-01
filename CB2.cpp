@@ -29,7 +29,7 @@ typedef unsigned long long ull;
 
 using namespace std;
 
-void print(vector <ll> gcout) {for (ll zout = 0; zout < gcout.size(); zout++) cout << gcout[gcout.size()-1-zout];}
+void print(vector <ll> gcout) { for (ll zout = 0; zout < gcout.size(); zout++) cout << gcout[gcout.size() - 1 - zout]; }
 
 //int TrunsferNumbers(int x, int k) {int c = 0;while (x > 0) {if (x % k == 0) c++;x /= k;}return c; }
 
@@ -37,22 +37,24 @@ int main() {
     FastIO();
 
     ll n; cin >> n;
+    if (n == 0) {cout << 0; return 0;}
+    if (n == 1) {cout << 1; return 0;}
+    ll k = -2;
 
-    int k = -2;
     vector <ll> v;
 
     int a = n, b;
 
-    while (floor(a / k) != 0) {
-        b = a / k;
-        int tm = a % k;
-        if (tm < 0) { tm += abs(k); b++;};
-        v.push_back(tm);
-        //cout << "tm: "  << a << " " << b << " " << tm << eol;
-        a = b;
+    while ((a / k) != 0) {
+        b = (a % k + abs(k)) % abs(k);
+        v.push_back(b);
+        int c = a;
+        a = (c - b) / k;
     }
-    if (a != 0) v.push_back(a);
-    
+
+    if (a < 0) v.push_back(11);
+    else if (a != 0) v.push_back(a);
+
     print(v);
 
     return 0;
