@@ -29,33 +29,69 @@ typedef unsigned long long ull;
 
 using namespace std;
 
-void print(vector <ll> gcout) { for (ll zout = 0; zout < gcout.size(); zout++) cout << gcout[gcout.size() - 1 - zout]; }
+//void print(vector <ll> gcout) { for (ll zout = 0; zout < gcout.size(); zout++) cout << gcout[gcout.size() - 1 - zout]; }
 
 //int TrunsferNumbers(int x, int k) {int c = 0;while (x > 0) {if (x % k == 0) c++;x /= k;}return c; }
 
 int main() {
     FastIO();
 
-    ll n; cin >> n;
+    int year; cin >> year;
+    int w; cin >> w;
+    int n; cin >> n;
+    
+    int td, tm, day, sumday = 0, mean;
+    char c;
 
-    int k = -2;
-    vector <ll> v;
+    vector <int> holydays;
 
-    int a = n, b;
+    vector <int> cd(12);
 
-    int s = abs(a) / abs(k);
-    int f = 
-    while (floor(a / k) != 0) {
-        b = a / k;
-        int tm = a % k;
-        if (tm < 0) { tm += abs(k); b -= abs(b); }
-        v.push_back(tm);
-        //cout << "tm: "  << a << " " << b << " " << tm << eol;
-        a = b;
+    int o;
+    if (year % 4) o = 1;
+    else o = 0;
+
+    for (int j = 0; j < 7; j++) cd[j] = 30 + ((j + 1) % 2);
+    cd[1] = 28 + o;
+    for (int j = 0; j < 5; j++) cd[j+7] = 30 + ((j + 1) % 2);
+
+    vector <int> pcd(13);
+    pcd[0] = 0;
+    for (int j = 1; j <= 12; j++) pcd[j] = pcd[j - 1] + cd[j-1];
+
+    for (int i = 0; i < n; i++) {
+        cin >> td >> c >> tm;
+
+        day = pcd[tm-1] + td;
+        sumday += day;
+        holydays.push_back(day);
+        //cout << day << eol;
     }
-    if (a != 0) v.push_back(a);
 
-    print(v);
+    mean = round(double(sumday) / double(n));
+
+    vector <int> weekend(365 + o);
+    
+    if (w == 7) {
+        weekend[0] = 1;
+        for (int i = 6; i < 365 + o; i += 7) {
+            weekend[i] = 1;
+            if (i < 365 + o - 1) weekend[i + 1] = 1;
+        }
+
+    }
+    else {
+        weekend[6 - w] = 1;
+        weekend[7 - w] = 1;
+        for (int i = (6 - w); i < 365 + o; i += 7) {
+            weekend[i] = 1;
+            if (i < 365 + o - 1) weekend[i + 1] = 1;
+        }
+    }
+
+
+
+    cout << mean;
 
     return 0;
 }
